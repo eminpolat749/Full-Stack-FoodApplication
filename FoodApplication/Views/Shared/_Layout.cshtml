@@ -31,18 +31,27 @@
                             <a class="nav-link text-pink fw-bold" asp-area="">Menu</a>
                         </li>
                     </ul>
-                    @if (!User.Identity.IsAuthenticated)
+                    @if (User.Identity!.IsAuthenticated)
                     {
-                        <div>
-                            <a class="nav-link fw-bold text-pink" asp-controller="Account"
-                               asp-action="Login">LogIn</a>
+                        <div class="d-flex justify-content-center align-content-center">
+                            <div class="text-center ">
+                                <span id="cartListIcon" ><i class="fa-solid fa-cart-shopping text-pink fs-4"></i></span>
+                                <div id="showCartList" 
+                                    class="position-absolute shadow rounded p-2 bg-white">
+                                    
+                                </div>
+                            </div>
+                           <div>
+                                <a class="nav-link fw-bold text-pink"
+                                   asp-controller="Account" asp-action="LogOut">LogOut</a>
+                           </div>
                         </div>
                     }
                     else
                     {
                         <div>
-                            <a class="nav-link fw-bold text-pink"
-                            asp-controller="Account" asp-action="LogOut" >LogOut</a>
+                            <a class="nav-link fw-bold text-pink" asp-controller="Account"
+                               asp-action="Login">LogIn</a>
                         </div>
                     }
 
@@ -96,6 +105,16 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/jquery-ui.min.js"></script>
+    @if(User.Identity!.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                getAddedCarts();
+                getCartList();
+            })
+        </script>
+    }
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

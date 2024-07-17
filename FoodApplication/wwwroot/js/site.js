@@ -22,6 +22,7 @@ function showRecipes(recipes, id) {
         data: JSON.stringify(recipes),
         success: function (htmlResult) {
             $('#' + id).html(htmlResult);
+            getAddedCarts();
         }
     });
 }
@@ -30,7 +31,7 @@ async function getOrderRecipe(id, showId) {
     // https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza&key=<insert your key>
     let resp = await fetch(`${apiURL}/${id}?key=${apikey}`);
     let result = await resp.json();
-    console.log(result);
+    
     let recipe = result.data.recipe;
     showOrderRecipeDetails(recipe, showId);
 }
@@ -65,4 +66,78 @@ function quantity(option) {
     totalAmount = price * qty;
     $('#qty').val(qty);
     $('#totalAmount').val(totalAmount);
+}
+
+// add to cart
+
+async function cart() {
+    let iTag = $(this).children('i')[0];
+    let recipeId = $(this).attr('data-recipeId');
+    
+    if ($(iTag).hasClass('fa-regular')) {
+        let resp = await fetch(`${apiURL}/${recipeId}?key=${apikey}`);
+        let result = await resp.json();
+        let cart = result.data.recipe;
+        cart.recipeId = recipeId;
+        delete cart.id;
+        cartRequest(cart, 'SaveCart', 'fa-solid', 'fa-regular', iTag);
+    }
+    else {
+        let data = { Id: recipeId };
+        cartRequest(data, 'RemoveCartFromList', 'fa-regular', 'fa-solid', iTag);
+    }
+}
+
+function cartRequest(data, action, addcls, removecls, iTag) {
+    
+    $.ajax({
+        url: '/Cart/' + action,
+        type: 'POST',
+        data: data,
+        success: function (resp) {
+            $(iTag).addClass(addcls);
+            $(iTag).removeClass(removecls);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
+function getAddedCarts() {
+    $.ajax({
+        url: '/Cart/GetAddedCarts',
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $('.addToCartIcon').each((index, spanTag) => {
+                let recipeId = $(spanTag).attr("data-recipeId");
+                for (var i = 0; i < result.length; i++) {
+                    if (recipeId == result[i]) {
+                        let itag = $(spanTag).children('i')[0];
+                        $(itag).addClass('fa-solid');
+                        $(itag).removeClass('fa-regular');
+                        break;
+                    }
+                }
+            })
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
+function getCartList() {
+    $.ajax({
+        url: '/Cart/GetCartList',
+        type: 'GET',
+        dataType: 'html',
+        success: function (result) {
+            $('#showCartList').html(result);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
 }

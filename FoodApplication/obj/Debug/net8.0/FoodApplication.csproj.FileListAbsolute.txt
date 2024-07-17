@@ -549,3 +549,4 @@ C:\Users\eminp\Desktop\Web-Project\FoodApplication\bin\Debug\net8.0\Microsoft.As
 C:\Users\eminp\Desktop\Web-Project\FoodApplication\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\eminp\Desktop\Web-Project\FoodApplication\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\eminp\Desktop\Web-Project\FoodApplication\obj\Debug\net8.0\FoodApplication.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\eminp\Desktop\Web-Project\FoodApplication\obj\Debug\net8.0\FoodApplication.sourcelink.json

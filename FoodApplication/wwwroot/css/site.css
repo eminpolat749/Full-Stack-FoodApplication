@@ -131,7 +131,8 @@ header {
 
 #showCartList {
     display: none;
-    right: 0;
+    right: 20px;
+    width: 400px;
 }
 
 #cartListIcon:hover ~#showCartList {
@@ -139,7 +140,28 @@ header {
 }
 
 .cartListImg {
+    width: 100px;
+    height: 60px;
+}
+
+#showCartList:hover {
+    display: block;
+}
+
+.cartImage {
     width: 180px;
     height: 100px;
+}
+
+.cartTitle {
+    width: 500px;
+}
+
+.emptyCart {
+    font-size: 300px;
+}
+
+.removeCartBTN {
+    cursor: pointer;
 }
 
